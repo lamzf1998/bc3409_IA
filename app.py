@@ -22,18 +22,16 @@ import joblib
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        income = request.form.get("income")
-        age = request.form.get("age")
-        loan = request.form.get("loan")
-        print(income, age, loan)
+        Income = request.form.get("Income")
+        Age = request.form.get("Age")
+        Loan = request.form.get("Loan")
+        print(Income, Age, Loan)
         model=joblib.load("XGBoost")
-        pred=model.predict([[float(income), float(age), float(loan)]])
+        pred=model.predict([[float(Income), float(Age), float(Loan)]])
         if pred == 0:
             pred = "No"
-        
         else: 
-            pred = "Yes"
-        
+            pred = "Yes"       
         s = "The predicted default score is : " + str(pred)
         return(render_template("index.html", result=s))
     else: 
